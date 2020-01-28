@@ -5,11 +5,16 @@
  */
 package classes;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author matheus.souza
  */
 public class Cliente {
+    
+    public static ArrayList<Cliente> lstClientes = new ArrayList<Cliente>();
+    
     private String nome;
     private String endereco;
 
