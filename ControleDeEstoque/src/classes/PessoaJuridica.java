@@ -13,10 +13,10 @@ public class PessoaJuridica extends Cliente{
     
     private String cnpj;
     private String cnhResponsavel;
-    private String descontoLocacao;
+    private int descontoLocacao;
     
     public PessoaJuridica(){
-        
+        super();
     }
 
     public String getCnpj() {
@@ -35,11 +35,11 @@ public class PessoaJuridica extends Cliente{
         this.cnhResponsavel = cnhResponsavel;
     }
 
-    public String getDescontoLocacao() {
+    public int getDescontoLocacao() {
         return descontoLocacao;
     }
 
-    public void setDescontoLocacao(String descontoLocacao) {
+    public void setDescontoLocacao(int descontoLocacao) {
         this.descontoLocacao = descontoLocacao;
     }
     

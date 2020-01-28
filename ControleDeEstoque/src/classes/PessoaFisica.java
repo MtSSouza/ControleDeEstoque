@@ -5,6 +5,8 @@
  */
 package classes;
 
+import java.util.Date;
+
 /**
  *
  * @author matheus.souza
@@ -13,7 +15,7 @@ public class PessoaFisica extends Cliente{
     
     private String cpf;
     private String cnh;
-    private String dtNascimento;
+    private Date dtNascimento;
     
     public PessoaFisica(){
         super();
@@ -35,11 +37,11 @@ public class PessoaFisica extends Cliente{
         this.cnh = cnh;
     }
 
-    public String getDtNascimento() {
+    public Date getDtNascimento() {
         return dtNascimento;
     }
 
-    public void setDtNascimento(String dtNascimento) {
+    public void setDtNascimento(Date dtNascimento) {
         this.dtNascimento = dtNascimento;
     }
     
