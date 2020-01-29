@@ -5,18 +5,27 @@
  */
 package forms;
 
+import classes.Carro;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author matheus.souza
  */
 public class TelaCadastroCarros extends javax.swing.JDialog {
-
+    
+    private Carro carroTemp = null;
     /**
      * Creates new form TelaCadastroCarros
      */
     public TelaCadastroCarros(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+    
+    public Carro execute(){
+        this.setVisible(true);
+        return this.carroTemp;      
     }
 
     /**
@@ -32,7 +41,7 @@ public class TelaCadastroCarros extends javax.swing.JDialog {
         Placa = new javax.swing.JLabel();
         txtPlacaDoCarro = new javax.swing.JTextField();
         Placa1 = new javax.swing.JLabel();
-        txtMarcaDoCarro1 = new javax.swing.JTextField();
+        txtMarcaDoCarro = new javax.swing.JTextField();
         txtModeloDoCarro = new javax.swing.JTextField();
         Placa2 = new javax.swing.JLabel();
         txtAnoDoCarro = new javax.swing.JTextField();
@@ -55,6 +64,11 @@ public class TelaCadastroCarros extends javax.swing.JDialog {
         Placa4.setText("Valor da diária:");
 
         btnGravar.setText("Gravar");
+        btnGravar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGravarActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Cancelar");
 
@@ -78,7 +92,7 @@ public class TelaCadastroCarros extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(Placa1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMarcaDoCarro1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtMarcaDoCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(Placa3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -104,7 +118,7 @@ public class TelaCadastroCarros extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Placa1)
-                    .addComponent(txtMarcaDoCarro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMarcaDoCarro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Placa2)
@@ -138,6 +152,27 @@ public class TelaCadastroCarros extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
+        try{
+        Carro carro = new Carro();
+        
+        carro.setPlaca(txtPlacaDoCarro.getText());
+        carro.setMarca(txtMarcaDoCarro.getText());
+        carro.setModelo(txtModeloDoCarro.getText());
+        carro.setAno(Integer.parseInt(txtAnoDoCarro.getText()));
+        carro.setValorDiariaLocacao(Float.parseFloat(txtValorDaDiaria.getText()));
+        
+        this.carroTemp = carro;
+        
+        this.setVisible(false);
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this, 
+                    "Não foi possível gravar pessoa. \n\n" + ex.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGravarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,7 +226,7 @@ public class TelaCadastroCarros extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtAnoDoCarro;
-    private javax.swing.JTextField txtMarcaDoCarro1;
+    private javax.swing.JTextField txtMarcaDoCarro;
     private javax.swing.JTextField txtModeloDoCarro;
     private javax.swing.JTextField txtPlacaDoCarro;
     private javax.swing.JTextField txtValorDaDiaria;

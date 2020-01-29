@@ -5,6 +5,12 @@
  */
 package forms;
 
+import classes.Carro;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author matheus.souza
@@ -32,7 +38,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblClientes = new javax.swing.JTable();
+        tblCarros = new javax.swing.JTable();
         btnNovoCarro = new javax.swing.JButton();
         btnAlterarCarro1 = new javax.swing.JButton();
         btnExcluirCarro2 = new javax.swing.JButton();
@@ -56,7 +62,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TelaPrincipal");
 
-        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
+        tblCarros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -79,7 +85,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tblClientes);
+        jScrollPane2.setViewportView(tblCarros);
 
         btnNovoCarro.setText("Novo");
         btnNovoCarro.addActionListener(new java.awt.event.ActionListener() {
@@ -167,7 +173,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairArquivoActionPerformed
 
     private void btnNovoCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoCarroActionPerformed
-        // TODO add your handling code here:
+        TelaCadastroCarros telaCadastroCarros = new TelaCadastroCarros(this, true);
+
+        Carro c = telaCadastroCarros.execute();
+
+        Carro.lstCarros.add(c);
+        this.atualizaTabelaCarros(Carro.lstCarros);
     }//GEN-LAST:event_btnNovoCarroActionPerformed
 
     private void btnAlterarCarro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarCarro1ActionPerformed
@@ -177,6 +188,31 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnExcluirCarro2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirCarro2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnExcluirCarro2ActionPerformed
+
+    private void atualizaTabelaCarros(List<Carro> tabelaCarros) {
+        try{
+        DefaultTableModel modelo = (DefaultTableModel) tblCarros.getModel();
+        modelo.getDataVector().removeAllElements();
+        
+        for(Carro carros : tabelaCarros){
+            Vector v = new Vector();
+            v.add(carros.getPlaca());
+            v.add(carros.getMarca());
+            v.add(carros.getModelo());
+            v.add(carros.getAno());
+            v.add(carros.getValorDiariaLocacao());
+            
+            modelo.addRow(v);
+        }
+        
+        tblCarros.repaint();
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this, 
+                    "Não foi possível carregar as pessoas.\n\n" + ex.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -225,6 +261,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable tblClientes;
+    private javax.swing.JTable tblCarros;
     // End of variables declaration//GEN-END:variables
 }

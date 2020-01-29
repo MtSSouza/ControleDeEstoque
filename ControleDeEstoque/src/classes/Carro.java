@@ -5,11 +5,15 @@
  */
 package classes;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author matheus.souza
  */
 public class Carro {
+    
+    public static ArrayList<Carro> lstCarros = new ArrayList<Carro>();
     
     private String placa;
     private String marca;
