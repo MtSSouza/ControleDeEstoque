@@ -43,6 +43,8 @@ public class PessoaJuridica extends Cliente{
         this.descontoLocacao = descontoLocacao;
     }
     
-    
+    public String getCPFouCNPJ() {
+        return this.cnpj;
+    }
     
 }

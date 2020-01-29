@@ -44,6 +44,12 @@ public class PessoaFisica extends Cliente{
     public void setDtNascimento(Date dtNascimento) {
         this.dtNascimento = dtNascimento;
     }
+
+    @Override
+    public String getCPFouCNPJ() {
+        return this.cpf;
+    }
+    
     
     
 }

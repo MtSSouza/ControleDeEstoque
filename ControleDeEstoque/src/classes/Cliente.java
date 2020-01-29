@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author matheus.souza
  */
-public class Cliente {
+public abstract class Cliente {
     
     public static ArrayList<Cliente> lstClientes = new ArrayList<Cliente>();
     
@@ -37,5 +37,6 @@ public class Cliente {
         this.endereco = endereco;
     }
     
+    public abstract String getCPFouCNPJ();
     
 }

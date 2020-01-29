@@ -13,8 +13,6 @@ import java.util.ArrayList;
  */
 public class Carro {
     
-    public static ArrayList<Carro> lstCarros = new ArrayList<Carro>();
-    
     private String placa;
     private String marca;
     private String modelo;

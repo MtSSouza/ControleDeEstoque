@@ -6,6 +6,7 @@
 package forms;
 
 import classes.Carro;
+import dados.CarroDados;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -216,28 +217,33 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         Carro c = telaCadastroCarros.execute();
 
-        Carro.lstCarros.add(c);
-        this.atualizaTabelaCarros(Carro.lstCarros);
+        CarroDados.lstCarros.add(c);
+        this.atualizaTabelaCarros(CarroDados.lstCarros);
     }//GEN-LAST:event_btnNovoCarroActionPerformed
 
     private void btnAlterarCarro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarCarro1ActionPerformed
         try {
+            if (CarroDados.lstCarros.size() > 0) {
+                if (tblCarros.getSelectedRow() != -1) {
+                    Carro c = CarroDados.lstCarros.get(tblCarros.getSelectedRow());
+                    if (c != null) {
 
-            if (Carro.lstCarros.size() > 0) {
-                Carro c = Carro.lstCarros.get(tblCarros.getSelectedRow());
-                if (c != null) {
+                        if (JOptionPane.showConfirmDialog(this,
+                                "Deseja alterar " + c.getPlaca() + "?",
+                                "Carros",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
 
-                    if (JOptionPane.showConfirmDialog(this,
-                            "Deseja alterar " + c.getPlaca() + "?",
-                            "Carros",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-
-                        TelaCadastroCarros telaCadastroCarros = new TelaCadastroCarros(this, true);
-                        telaCadastroCarros.execute(c);
-                        this.atualizaTabelaCarros(Carro.lstCarros);
+                            TelaCadastroCarros telaCadastroCarros = new TelaCadastroCarros(this, true);
+                            telaCadastroCarros.execute(c);
+                            this.atualizaTabelaCarros(CarroDados.lstCarros);
+                        }
                     }
-                } 
+                } else {
+                    JOptionPane.showMessageDialog(this, "Não há itens selecionados",
+                            "Atenção",
+                            JOptionPane.WARNING_MESSAGE);
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Não há veículos na lista!",
                         "Atenção",
@@ -254,8 +260,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnExcluirCarro2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirCarro2ActionPerformed
         try {
 
-            if (Carro.lstCarros.size() > 0) {
-                Carro c = Carro.lstCarros.get(tblCarros.getSelectedRow());
+            if (CarroDados.lstCarros.size() > 0) {
+                
+                String placa = tblCarros.getValueAt(tblCarros.getSelectedRow(), 0).toString();
+                Carro c = CarroDados.obterCarroPorPlaca(placa, CarroDados.lstCarros);
                 if (c != null) {
 
                     if (JOptionPane.showConfirmDialog(this,
@@ -264,10 +272,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
 
-                        TelaCadastroCarros telaCadastroCarros = new TelaCadastroCarros(this, true);
-                        Carro.lstCarros.remove(c);
+                        //TelaCadastroCarros telaCadastroCarros = new TelaCadastroCarros(this, true);
+                        CarroDados.lstCarros.remove(c);
 
-                        this.atualizaTabelaCarros(Carro.lstCarros);
+                        this.atualizaTabelaCarros(CarroDados.lstCarros);
                     }
                 }
             }
@@ -282,21 +290,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnBuscarCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCarroActionPerformed
 
         if (!txtBuscarCarro.getText().isEmpty()) {
-            Carro c = null;
-            for (Carro carro : Carro.lstCarros) {
-                if (carro.getPlaca().equals(txtBuscarCarro.getText())) {
-                    c = carro;
-                }
-            }
+            Carro c = CarroDados.obterCarroPorPlaca(txtBuscarCarro.getText(), CarroDados.lstCarros);            
             buscaTabelaCarros(c);
         } else {
-            atualizaTabelaCarros(Carro.lstCarros);
+            atualizaTabelaCarros(CarroDados.lstCarros);
         }
     }//GEN-LAST:event_btnBuscarCarroActionPerformed
 
     private void btnLimparBuscarCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparBuscarCarroActionPerformed
         // TODO add your handling code here:
-        atualizaTabelaCarros(Carro.lstCarros);
+        atualizaTabelaCarros(CarroDados.lstCarros);
     }//GEN-LAST:event_btnLimparBuscarCarroActionPerformed
 
     private void atualizaTabelaCarros(List<Carro> tabelaCarros) {
@@ -326,22 +329,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void buscaTabelaCarros(Carro carro) {
         try {
-            if (carro != null) {
-                DefaultTableModel modelo = (DefaultTableModel) tblCarros.getModel();
-                modelo.getDataVector().removeAllElements();
+            if (!CarroDados.lstCarros.isEmpty()) {
+                if (carro != null) {
+                    DefaultTableModel modelo = (DefaultTableModel) tblCarros.getModel();
+                    modelo.getDataVector().removeAllElements();
 
-                Vector v = new Vector();
-                v.add(carro.getPlaca());
-                v.add(carro.getMarca());
-                v.add(carro.getModelo());
-                v.add(carro.getAno());
-                v.add(carro.getValorDiariaLocacao());
+                    Vector v = new Vector();
+                    v.add(carro.getPlaca());
+                    v.add(carro.getMarca());
+                    v.add(carro.getModelo());
+                    v.add(carro.getAno());
+                    v.add(carro.getValorDiariaLocacao());
 
-                modelo.addRow(v);
+                    modelo.addRow(v);
 
-                tblCarros.repaint();
+                    tblCarros.repaint();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Nenhum veículo foi encontrado!",
+                            "Atenção",
+                            JOptionPane.WARNING_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Nenhum veículo foi encontrado!",
+                JOptionPane.showMessageDialog(this, "Não há veículos na lista!",
                         "Atenção",
                         JOptionPane.WARNING_MESSAGE);
             }
