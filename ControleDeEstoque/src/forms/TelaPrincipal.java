@@ -17,6 +17,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
 
+    private Carro carroTemp = null;
+
     /**
      * Creates new form TelaPrincipal
      */
@@ -42,6 +44,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnNovoCarro = new javax.swing.JButton();
         btnAlterarCarro1 = new javax.swing.JButton();
         btnExcluirCarro2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtBuscarCarro = new javax.swing.JTextField();
+        btnBuscarCarro = new javax.swing.JButton();
+        btnLimparBuscarCarro = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btnSairArquivo = new javax.swing.JMenuItem();
@@ -108,33 +114,66 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Buscar pela placa: ");
+
+        btnBuscarCarro.setText("Buscar");
+        btnBuscarCarro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarCarroActionPerformed(evt);
+            }
+        });
+
+        btnLimparBuscarCarro.setText("Limpar busca");
+        btnLimparBuscarCarro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparBuscarCarroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtBuscarCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscarCarro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLimparBuscarCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(144, 144, 144)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnNovoCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAlterarCarro1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnExcluirCarro2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBuscarCarro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarCarro)
+                    .addComponent(jLabel1)
+                    .addComponent(btnLimparBuscarCarro))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovoCarro)
                     .addComponent(btnAlterarCarro1)
                     .addComponent(btnExcluirCarro2))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Carros", jPanel1);
@@ -161,7 +200,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
         );
 
         pack();
@@ -182,33 +221,133 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovoCarroActionPerformed
 
     private void btnAlterarCarro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarCarro1ActionPerformed
-        // TODO add your handling code here:
+        try {
+
+            if (Carro.lstCarros.size() > 0) {
+                Carro c = Carro.lstCarros.get(tblCarros.getSelectedRow());
+                if (c != null) {
+
+                    if (JOptionPane.showConfirmDialog(this,
+                            "Deseja alterar " + c.getPlaca() + "?",
+                            "Carros",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+
+                        TelaCadastroCarros telaCadastroCarros = new TelaCadastroCarros(this, true);
+                        telaCadastroCarros.execute(c);
+                        this.atualizaTabelaCarros(Carro.lstCarros);
+                    }
+                } 
+            } else {
+                JOptionPane.showMessageDialog(this, "Não há veículos na lista!",
+                        "Atenção",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Não foi possível alterar o carro.\n\n" + ex.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnAlterarCarro1ActionPerformed
 
     private void btnExcluirCarro2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirCarro2ActionPerformed
-        // TODO add your handling code here:
+        try {
+
+            if (Carro.lstCarros.size() > 0) {
+                Carro c = Carro.lstCarros.get(tblCarros.getSelectedRow());
+                if (c != null) {
+
+                    if (JOptionPane.showConfirmDialog(this,
+                            "Deseja Excluir " + c.getPlaca() + "?",
+                            "Carros",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+
+                        TelaCadastroCarros telaCadastroCarros = new TelaCadastroCarros(this, true);
+                        Carro.lstCarros.remove(c);
+
+                        this.atualizaTabelaCarros(Carro.lstCarros);
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Não foi possível excluir o carro.\n\n" + ex.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnExcluirCarro2ActionPerformed
 
-    private void atualizaTabelaCarros(List<Carro> tabelaCarros) {
-        try{
-        DefaultTableModel modelo = (DefaultTableModel) tblCarros.getModel();
-        modelo.getDataVector().removeAllElements();
-        
-        for(Carro carros : tabelaCarros){
-            Vector v = new Vector();
-            v.add(carros.getPlaca());
-            v.add(carros.getMarca());
-            v.add(carros.getModelo());
-            v.add(carros.getAno());
-            v.add(carros.getValorDiariaLocacao());
-            
-            modelo.addRow(v);
+    private void btnBuscarCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCarroActionPerformed
+
+        if (!txtBuscarCarro.getText().isEmpty()) {
+            Carro c = null;
+            for (Carro carro : Carro.lstCarros) {
+                if (carro.getPlaca().equals(txtBuscarCarro.getText())) {
+                    c = carro;
+                }
+            }
+            buscaTabelaCarros(c);
+        } else {
+            atualizaTabelaCarros(Carro.lstCarros);
         }
-        
-        tblCarros.repaint();
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(this, 
-                    "Não foi possível carregar as pessoas.\n\n" + ex.getMessage(),
+    }//GEN-LAST:event_btnBuscarCarroActionPerformed
+
+    private void btnLimparBuscarCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparBuscarCarroActionPerformed
+        // TODO add your handling code here:
+        atualizaTabelaCarros(Carro.lstCarros);
+    }//GEN-LAST:event_btnLimparBuscarCarroActionPerformed
+
+    private void atualizaTabelaCarros(List<Carro> tabelaCarros) {
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblCarros.getModel();
+            modelo.getDataVector().removeAllElements();
+
+            for (Carro carros : tabelaCarros) {
+                Vector v = new Vector();
+                v.add(carros.getPlaca());
+                v.add(carros.getMarca());
+                v.add(carros.getModelo());
+                v.add(carros.getAno());
+                v.add(carros.getValorDiariaLocacao());
+
+                modelo.addRow(v);
+            }
+
+            tblCarros.repaint();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Não foi possível carregar o novo carro.\n\n" + ex.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void buscaTabelaCarros(Carro carro) {
+        try {
+            if (carro != null) {
+                DefaultTableModel modelo = (DefaultTableModel) tblCarros.getModel();
+                modelo.getDataVector().removeAllElements();
+
+                Vector v = new Vector();
+                v.add(carro.getPlaca());
+                v.add(carro.getMarca());
+                v.add(carro.getModelo());
+                v.add(carro.getAno());
+                v.add(carro.getValorDiariaLocacao());
+
+                modelo.addRow(v);
+
+                tblCarros.repaint();
+            } else {
+                JOptionPane.showMessageDialog(this, "Nenhum veículo foi encontrado!",
+                        "Atenção",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Não foi possível buscar o carro.\n\n" + ex.getMessage(),
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -251,9 +390,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterarCarro1;
+    private javax.swing.JButton btnBuscarCarro;
     private javax.swing.JButton btnExcluirCarro2;
+    private javax.swing.JButton btnLimparBuscarCarro;
     private javax.swing.JButton btnNovoCarro;
     private javax.swing.JMenuItem btnSairArquivo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -262,5 +404,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable tblCarros;
+    private javax.swing.JTextField txtBuscarCarro;
     // End of variables declaration//GEN-END:variables
 }

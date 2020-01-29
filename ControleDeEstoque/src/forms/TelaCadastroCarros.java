@@ -13,8 +13,10 @@ import javax.swing.JOptionPane;
  * @author matheus.souza
  */
 public class TelaCadastroCarros extends javax.swing.JDialog {
-    
+
     private Carro carroTemp = null;
+    private boolean alterar = false;
+
     /**
      * Creates new form TelaCadastroCarros
      */
@@ -22,10 +24,24 @@ public class TelaCadastroCarros extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-    
-    public Carro execute(){
+
+    public Carro execute() {
         this.setVisible(true);
-        return this.carroTemp;      
+        return this.carroTemp;
+    }
+
+    public Carro execute(Carro c) {
+        this.carroTemp = c;
+        this.alterar = true;
+
+        txtPlacaDoCarro.setText(c.getPlaca());
+        txtMarcaDoCarro.setText(c.getMarca());
+        txtModeloDoCarro.setText(c.getModelo());
+        txtAnoDoCarro.setText(Integer.toString(c.getAno()));
+        txtValorDaDiaria.setText(Float.toString(c.getValorDiariaLocacao()));
+
+        this.setVisible(true);
+        return this.carroTemp;
     }
 
     /**
@@ -49,7 +65,7 @@ public class TelaCadastroCarros extends javax.swing.JDialog {
         Placa4 = new javax.swing.JLabel();
         txtValorDaDiaria = new javax.swing.JTextField();
         btnGravar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -70,7 +86,12 @@ public class TelaCadastroCarros extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText("Cancelar");
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -105,7 +126,7 @@ public class TelaCadastroCarros extends javax.swing.JDialog {
                         .addGap(71, 71, 71)
                         .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(btnCancelar)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -134,7 +155,7 @@ public class TelaCadastroCarros extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGravar)
-                    .addComponent(jButton1))
+                    .addComponent(btnCancelar))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -154,25 +175,36 @@ public class TelaCadastroCarros extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        try{
-        Carro carro = new Carro();
-        
-        carro.setPlaca(txtPlacaDoCarro.getText());
-        carro.setMarca(txtMarcaDoCarro.getText());
-        carro.setModelo(txtModeloDoCarro.getText());
-        carro.setAno(Integer.parseInt(txtAnoDoCarro.getText()));
-        carro.setValorDiariaLocacao(Float.parseFloat(txtValorDaDiaria.getText()));
-        
-        this.carroTemp = carro;
-        
-        this.setVisible(false);
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(this, 
+        try {
+            Carro carro = null;
+
+            if (this.alterar == true) {
+                carro = this.carroTemp;
+            } else {
+                carro = new Carro();
+            }
+
+            carro.setPlaca(txtPlacaDoCarro.getText());
+            carro.setMarca(txtMarcaDoCarro.getText());
+            carro.setModelo(txtModeloDoCarro.getText());
+            carro.setAno(Integer.parseInt(txtAnoDoCarro.getText()));
+            carro.setValorDiariaLocacao(Float.parseFloat(txtValorDaDiaria.getText()));
+
+            this.carroTemp = carro;
+            this.setVisible(false);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
                     "Não foi possível gravar pessoa. \n\n" + ex.getMessage(),
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGravarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.setVisible(false);
+        this.carroTemp = null;
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -222,8 +254,8 @@ public class TelaCadastroCarros extends javax.swing.JDialog {
     private javax.swing.JLabel Placa2;
     private javax.swing.JLabel Placa3;
     private javax.swing.JLabel Placa4;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGravar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtAnoDoCarro;
     private javax.swing.JTextField txtMarcaDoCarro;
