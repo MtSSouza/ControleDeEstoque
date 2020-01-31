@@ -289,8 +289,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void btnBuscarCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCarroActionPerformed
 
-        if (!txtBuscarCarro.getText().isEmpty()) {
-            Carro c = CarroDados.obterCarroPorPlaca(txtBuscarCarro.getText(), CarroDados.lstCarros);            
+        if (!txtBuscarCarro.getText().equals("")) {
+            Carro c = CarroDados.obterCarroPorPlaca(txtBuscarCarro.getText().trim(), CarroDados.lstCarros);            
             buscaTabelaCarros(c);
         } else {
             atualizaTabelaCarros(CarroDados.lstCarros);
