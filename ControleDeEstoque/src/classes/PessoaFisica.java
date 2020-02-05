@@ -49,6 +49,11 @@ public class PessoaFisica extends Cliente{
     public String getCPFouCNPJ() {
         return this.cpf;
     }
+
+    @Override
+    public String getCNHouCNHResp() {
+       return this.cnh;
+    }
     
     
     

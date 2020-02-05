@@ -6,7 +6,11 @@
 package forms;
 
 import classes.Carro;
+import classes.Cliente;
+import classes.PessoaFisica;
+import classes.PessoaJuridica;
 import dados.CarroDados;
+import dados.ClienteDados;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -49,6 +53,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         txtBuscarCarro = new javax.swing.JTextField();
         btnBuscarCarro = new javax.swing.JButton();
         btnLimparBuscarCarro = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        btnNovoCliente = new javax.swing.JButton();
+        btnAlterarCliente = new javax.swing.JButton();
+        btnExcluirCliente = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblClientes = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btnSairArquivo = new javax.swing.JMenuItem();
@@ -136,12 +146,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtBuscarCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,6 +187,84 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Carros", jPanel1);
 
+        btnNovoCliente.setText("Novo");
+        btnNovoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoClienteActionPerformed(evt);
+            }
+        });
+
+        btnAlterarCliente.setText("Alterar");
+        btnAlterarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarClienteActionPerformed(evt);
+            }
+        });
+
+        btnExcluirCliente.setText("Excluir");
+        btnExcluirCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirClienteActionPerformed(evt);
+            }
+        });
+
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nome", "Endereço", "CPF ou CNPJ", "CNH", "DtNascimento", "Desconto na Locação"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tblClientes);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNovoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAlterarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnExcluirCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(29, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNovoCliente)
+                    .addComponent(btnAlterarCliente)
+                    .addComponent(btnExcluirCliente))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Clientes", jPanel2);
+
         jMenu1.setText("Arquivo");
 
         btnSairArquivo.setText("Sair");
@@ -201,7 +287,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -302,6 +388,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
         atualizaTabelaCarros(CarroDados.lstCarros);
     }//GEN-LAST:event_btnLimparBuscarCarroActionPerformed
 
+    private void btnNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoClienteActionPerformed
+        // TODO add your handling code here:
+        TelaCadastroClientes telaCadastroClientes = new TelaCadastroClientes(this, true);
+
+        Cliente c = telaCadastroClientes.execute();
+
+        ClienteDados.lstClientes.add(c);
+        this.atualizaTabelaClientes(ClienteDados.lstClientes);
+    }//GEN-LAST:event_btnNovoClienteActionPerformed
+
+    private void btnAlterarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAlterarClienteActionPerformed
+
+    private void btnExcluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExcluirClienteActionPerformed
+
     private void atualizaTabelaCarros(List<Carro> tabelaCarros) {
         try {
             DefaultTableModel modelo = (DefaultTableModel) tblCarros.getModel();
@@ -361,6 +465,35 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    private void atualizaTabelaClientes(List<Cliente> tabelaClientes) {
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblClientes.getModel();
+            modelo.getDataVector().removeAllElements();
+
+            for (Cliente clientes : tabelaClientes) {
+                Vector v = new Vector();
+                v.add(clientes.getNome());
+                v.add(clientes.getEndereco());
+                v.add(clientes.getCPFouCNPJ());
+                v.add(clientes.getCNHouCNHResp());
+                /*if(cliente instace of PessoaFisica){
+                    v.add(((PessoaFisica) clientes).getDtNascimento());
+                } else if (tabelaClientes.getClass().getName().equals("Cliente")){
+                    v.add(((PessoaJuridica) clientes).getDescontoLocacao() + "%");
+                }*/
+
+                modelo.addRow(v);
+            }
+
+            tblClientes.repaint();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Não foi possível carregar o novo carro.\n\n" + ex.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -399,20 +532,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterarCarro1;
+    private javax.swing.JButton btnAlterarCliente;
     private javax.swing.JButton btnBuscarCarro;
     private javax.swing.JButton btnExcluirCarro2;
+    private javax.swing.JButton btnExcluirCliente;
     private javax.swing.JButton btnLimparBuscarCarro;
     private javax.swing.JButton btnNovoCarro;
+    private javax.swing.JButton btnNovoCliente;
     private javax.swing.JMenuItem btnSairArquivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable tblCarros;
+    private javax.swing.JTable tblClientes;
     private javax.swing.JTextField txtBuscarCarro;
     // End of variables declaration//GEN-END:variables
 }

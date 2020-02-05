@@ -13,7 +13,7 @@ public class PessoaJuridica extends Cliente{
     
     private String cnpj;
     private String cnhResponsavel;
-    private int descontoLocacao;
+    private float descontoLocacao;
     
     public PessoaJuridica(){
         super();
@@ -35,16 +35,25 @@ public class PessoaJuridica extends Cliente{
         this.cnhResponsavel = cnhResponsavel;
     }
 
-    public int getDescontoLocacao() {
+    public float getDescontoLocacao() {
         return descontoLocacao;
     }
 
-    public void setDescontoLocacao(int descontoLocacao) {
+    public void setDescontoLocacao(float descontoLocacao) {
         this.descontoLocacao = descontoLocacao;
     }
     
     public String getCPFouCNPJ() {
         return this.cnpj;
+    }
+    
+    public float getDesconto(){
+    return this.descontoLocacao/100;
+    }
+
+    @Override
+    public String getCNHouCNHResp() {
+        return this.cnhResponsavel;
     }
     
 }
