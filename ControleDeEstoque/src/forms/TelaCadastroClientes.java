@@ -46,12 +46,16 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
 
         if (c instanceof PessoaFisica) {
             
+            rdBtnCpf.setSelected(true);
+            rdBtnCnpj.setEnabled(false);
             txtCNH.setText(c.getCNHouCNHResp());
             txtCpfCnpj.setText(c.getCPFouCNPJ());
             txtDataDesc.setText(f.format(((PessoaFisica) c).getDtNascimento()));
             
         } else if (c instanceof PessoaJuridica) {
             
+            rdBtnCnpj.setSelected(true);
+            rdBtnCpf.setEnabled(false);
             txtCNH.setText(c.getCNHouCNHResp());
             txtCpfCnpj.setText(c.getCPFouCNPJ());
             txtDataDesc.setText(Float.toString(((PessoaJuridica) c).getDescontoLocacao()));
@@ -97,6 +101,7 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
         jLabel3.setText("CNH:");
 
         btnGroup.add(rdBtnCpf);
+        rdBtnCpf.setSelected(true);
         rdBtnCpf.setText("CPF");
         rdBtnCpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,6 +145,12 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
                 btnCancelarClienteActionPerformed(evt);
             }
         });
+
+        try {
+            txtCpfCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -273,7 +284,7 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             if (rdBtnCpf.isSelected()) {
-                lblCpfCnpj.setText("CPF");
+                lblCpfCnpj.setText("CPF:");
                 lblDataDesc.setText("Nascimento:");
 
                 MaskFormatter maskCPFCNPJ = new MaskFormatter("###.###.###-##");
@@ -293,7 +304,7 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             if (rdBtnCnpj.isSelected()) {
-                lblCpfCnpj.setText("CNPJ");
+                lblCpfCnpj.setText("CNPJ:");
                 lblDataDesc.setText("Desconto(%):");
 
                 MaskFormatter maskCPFCNPJ = new MaskFormatter("##.###.###/####-##");
