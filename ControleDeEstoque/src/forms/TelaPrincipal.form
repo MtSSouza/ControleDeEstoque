@@ -46,6 +46,7 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="TelaPrincipal"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
@@ -245,7 +246,7 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="29" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="jScrollPane3" min="-2" pref="196" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -299,7 +300,7 @@
                         <Column editable="false" title="CPF ou CNPJ" type="java.lang.String"/>
                         <Column editable="false" title="CNH" type="java.lang.Integer"/>
                         <Column editable="false" title="DtNascimento" type="java.lang.String"/>
-                        <Column editable="false" title="Desconto na Loca&#xe7;&#xe3;o" type="java.lang.String"/>
+                        <Column editable="false" title="Desconto" type="java.lang.String"/>
                       </Table>
                     </Property>
                   </Properties>

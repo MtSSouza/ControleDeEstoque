@@ -35,6 +35,33 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
         return this.clienteTemp;
     }
 
+    public Cliente execute(Cliente c) {
+        SimpleDateFormat f = new SimpleDateFormat("##/##/####");
+
+        this.clienteTemp = c;
+        this.alterar = true;
+
+        txtNome.setText(c.getNome());
+        txtEndereco.setText(c.getEndereco());
+
+        if (c instanceof PessoaFisica) {
+            
+            txtCNH.setText(c.getCNHouCNHResp());
+            txtCpfCnpj.setText(c.getCPFouCNPJ());
+            txtDataDesc.setText(f.format(((PessoaFisica) c).getDtNascimento()));
+            
+        } else if (c instanceof PessoaJuridica) {
+            
+            txtCNH.setText(c.getCNHouCNHResp());
+            txtCpfCnpj.setText(c.getCPFouCNPJ());
+            txtDataDesc.setText(Float.toString(((PessoaJuridica) c).getDescontoLocacao()));
+
+        }
+
+        this.setVisible(true);
+        return this.clienteTemp;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,13 +78,13 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
         rdBtnCpf = new javax.swing.JRadioButton();
         rdBtnCnpj = new javax.swing.JRadioButton();
         lblCpfCnpj = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtData = new javax.swing.JFormattedTextField();
+        lblDataDesc = new javax.swing.JLabel();
+        txtDataDesc = new javax.swing.JFormattedTextField();
         txtCNH = new javax.swing.JTextField();
         txtEndereco = new javax.swing.JTextField();
         txtNome = new javax.swing.JTextField();
         btnGravarCliente = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnCancelarCliente = new javax.swing.JButton();
         txtCpfCnpj = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -87,16 +114,16 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
 
         lblCpfCnpj.setText("CPF:");
 
-        jLabel4.setText("Nascimento: ");
+        lblDataDesc.setText("Nascimento:");
 
         try {
-            txtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            txtDataDesc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        txtData.addActionListener(new java.awt.event.ActionListener() {
+        txtDataDesc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDataActionPerformed(evt);
+                txtDataDescActionPerformed(evt);
             }
         });
 
@@ -107,7 +134,12 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
             }
         });
 
-        jButton2.setText("Cancelar");
+        btnCancelarCliente.setText("Cancelar");
+        btnCancelarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -134,11 +166,11 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtCNH, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                                        .addComponent(txtCNH, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel4)
+                                        .addComponent(lblDataDesc)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtDataDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(txtEndereco)
                                     .addComponent(txtNome))))
                         .addContainerGap())
@@ -146,7 +178,7 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnGravarCliente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
+                        .addComponent(btnCancelarCliente)
                         .addGap(46, 46, 46))))
         );
         layout.setVerticalGroup(
@@ -164,8 +196,8 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtCNH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDataDesc)
+                    .addComponent(txtDataDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -180,7 +212,7 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGravarCliente)
-                    .addComponent(jButton2))
+                    .addComponent(btnCancelarCliente))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -188,9 +220,9 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataActionPerformed
+    private void txtDataDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataDescActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtDataActionPerformed
+    }//GEN-LAST:event_txtDataDescActionPerformed
 
     private void btnGravarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarClienteActionPerformed
         // TODO add your handling code here:
@@ -208,7 +240,7 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
 
                 ((PessoaFisica) cliente).setCpf(txtCpfCnpj.getText());
                 ((PessoaFisica) cliente).setCnh(txtCNH.getText());
-                ((PessoaFisica) cliente).setDtNascimento(f.parse(txtData.getText()));
+                ((PessoaFisica) cliente).setDtNascimento(f.parse(txtDataDesc.getText()));
             } else if (rdBtnCnpj.isSelected()) {
 
                 if (this.alterar == true) {
@@ -218,8 +250,10 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
                 }
                 ((PessoaJuridica) cliente).setCnpj(txtCpfCnpj.getText());
                 ((PessoaJuridica) cliente).setCnhResponsavel(txtCpfCnpj.getText());
+                ((PessoaJuridica) cliente).setDescontoLocacao(Float.parseFloat(txtDataDesc.getText()));
+
             }
-            
+
             cliente.setNome(txtNome.getText());
             cliente.setEndereco(txtEndereco.getText());
 
@@ -228,7 +262,7 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                    "Não foi possível gravar pessoa. \n\n" + ex.getMessage(),
+                    "Não foi possível gravar o cliente. \n\n" + ex.getMessage(),
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -240,10 +274,16 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
         try {
             if (rdBtnCpf.isSelected()) {
                 lblCpfCnpj.setText("CPF");
+                lblDataDesc.setText("Nascimento:");
 
-                MaskFormatter mask = new MaskFormatter("###.###.###-##");
-                DefaultFormatterFactory dff = new DefaultFormatterFactory(mask);
-                txtCpfCnpj.setFormatterFactory(dff);
+                MaskFormatter maskCPFCNPJ = new MaskFormatter("###.###.###-##");
+                MaskFormatter maskDataDesc = new MaskFormatter("##/##/####");
+
+                DefaultFormatterFactory dffCPFCNPJ = new DefaultFormatterFactory(maskCPFCNPJ);
+                DefaultFormatterFactory dffDataDesc = new DefaultFormatterFactory(maskDataDesc);
+
+                txtCpfCnpj.setFormatterFactory(dffCPFCNPJ);
+                txtDataDesc.setFormatterFactory(dffDataDesc);
             }
         } catch (Exception ex) {
         }
@@ -254,13 +294,26 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
         try {
             if (rdBtnCnpj.isSelected()) {
                 lblCpfCnpj.setText("CNPJ");
-                MaskFormatter mask = new MaskFormatter("##.###.###/####-##");
-                DefaultFormatterFactory dff = new DefaultFormatterFactory(mask);
-                txtCpfCnpj.setFormatterFactory(dff);
+                lblDataDesc.setText("Desconto(%):");
+
+                MaskFormatter maskCPFCNPJ = new MaskFormatter("##.###.###/####-##");
+                MaskFormatter maskDataDesc = new MaskFormatter("##");
+
+                DefaultFormatterFactory dffCPFCNPJ = new DefaultFormatterFactory(maskCPFCNPJ);
+                DefaultFormatterFactory dffDataDesc = new DefaultFormatterFactory(maskDataDesc);
+
+                txtCpfCnpj.setFormatterFactory(dffCPFCNPJ);
+                txtDataDesc.setFormatterFactory(dffDataDesc);
             }
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_rdBtnCnpjActionPerformed
+
+    private void btnCancelarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarClienteActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        this.clienteTemp = null;
+    }//GEN-LAST:event_btnCancelarClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -306,19 +359,19 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelarCliente;
     private javax.swing.JButton btnGravarCliente;
     private javax.swing.ButtonGroup btnGroup;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lblCpfCnpj;
+    private javax.swing.JLabel lblDataDesc;
     private javax.swing.JRadioButton rdBtnCnpj;
     private javax.swing.JRadioButton rdBtnCpf;
     private javax.swing.JTextField txtCNH;
     private javax.swing.JFormattedTextField txtCpfCnpj;
-    private javax.swing.JFormattedTextField txtData;
+    private javax.swing.JFormattedTextField txtDataDesc;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables

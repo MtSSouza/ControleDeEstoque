@@ -78,6 +78,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TelaPrincipal");
+        setResizable(false);
 
         tblCarros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -213,7 +214,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nome", "Endereço", "CPF ou CNPJ", "CNH", "DtNascimento", "Desconto na Locação"
+                "Nome", "Endereço", "CPF ou CNPJ", "CNH", "DtNascimento", "Desconto"
             }
         ) {
             Class[] types = new Class [] {
@@ -253,7 +254,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -347,7 +348,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         try {
 
             if (CarroDados.lstCarros.size() > 0) {
-                
+
                 String placa = tblCarros.getValueAt(tblCarros.getSelectedRow(), 0).toString();
                 Carro c = CarroDados.obterCarroPorPlaca(placa, CarroDados.lstCarros);
                 if (c != null) {
@@ -376,7 +377,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnBuscarCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCarroActionPerformed
 
         if (!txtBuscarCarro.getText().equals("")) {
-            Carro c = CarroDados.obterCarroPorPlaca(txtBuscarCarro.getText().trim(), CarroDados.lstCarros);            
+            Carro c = CarroDados.obterCarroPorPlaca(txtBuscarCarro.getText().trim(), CarroDados.lstCarros);
             buscaTabelaCarros(c);
         } else {
             atualizaTabelaCarros(CarroDados.lstCarros);
@@ -400,10 +401,70 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void btnAlterarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarClienteActionPerformed
         // TODO add your handling code here:
+        try {
+            if (ClienteDados.lstClientes.size() > 0) {
+                if (tblClientes.getSelectedRow() != -1) {
+                    Cliente c = ClienteDados.lstClientes.get(tblClientes.getSelectedRow());
+                    if (c != null) {
+
+                        if (JOptionPane.showConfirmDialog(this,
+                                "Deseja alterar " + c.getNome() + "?",
+                                "Clientes",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+
+                            TelaCadastroClientes telaCadastroClientes = new TelaCadastroClientes(this, true);
+                            telaCadastroClientes.execute(c);
+                            this.atualizaTabelaClientes(ClienteDados.lstClientes);
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Não há itens selecionados",
+                            "Atenção",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Não há clientes na lista!",
+                        "Atenção",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Não foi possível alterar o cliente.\n\n" + ex.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnAlterarClienteActionPerformed
 
     private void btnExcluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirClienteActionPerformed
         // TODO add your handling code here:
+        try {
+
+            if (ClienteDados.lstClientes.size() > 0) {
+
+                String nome = tblClientes.getValueAt(tblClientes.getSelectedRow(), 0).toString();
+                Cliente c = ClienteDados.obterClientePorNome(nome, ClienteDados.lstClientes);
+                if (c != null) {
+
+                    if (JOptionPane.showConfirmDialog(this,
+                            "Deseja Excluir " + c.getNome() + "?",
+                            "Clietes",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+
+                        //TelaCadastroCarros telaCadastroCarros = new TelaCadastroCarros(this, true);
+                        ClienteDados.lstClientes.remove(c);
+
+                        this.atualizaTabelaClientes(ClienteDados.lstClientes);
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Não foi possível excluir o carro.\n\n" + ex.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnExcluirClienteActionPerformed
 
     private void atualizaTabelaCarros(List<Carro> tabelaCarros) {
@@ -465,7 +526,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void atualizaTabelaClientes(List<Cliente> tabelaClientes) {
         try {
             DefaultTableModel modelo = (DefaultTableModel) tblClientes.getModel();
@@ -477,11 +538,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 v.add(clientes.getEndereco());
                 v.add(clientes.getCPFouCNPJ());
                 v.add(clientes.getCNHouCNHResp());
-                /*if(cliente instace of PessoaFisica){
+
+                if (clientes instanceof PessoaFisica) {
                     v.add(((PessoaFisica) clientes).getDtNascimento());
-                } else if (tabelaClientes.getClass().getName().equals("Cliente")){
-                    v.add(((PessoaJuridica) clientes).getDescontoLocacao() + "%");
-                }*/
+                    v.add(null);
+                } else if (clientes instanceof PessoaJuridica) {
+                    v.add(null);
+                    v.add(((PessoaJuridica) clientes).getDescontoLocacao());
+                }
 
                 modelo.addRow(v);
             }
@@ -489,7 +553,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             tblClientes.repaint();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                    "Não foi possível carregar o novo carro.\n\n" + ex.getMessage(),
+                    "Não foi possível carregar o novo cliente.\n\n" + ex.getMessage(),
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
         }
