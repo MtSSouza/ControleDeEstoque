@@ -36,34 +36,53 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
     }
 
     public Cliente execute(Cliente c) {
-        SimpleDateFormat f = new SimpleDateFormat("##/##/####");
+        try {
+            SimpleDateFormat f = new SimpleDateFormat("##/##/####");
 
-        this.clienteTemp = c;
-        this.alterar = true;
+            this.clienteTemp = c;
+            this.alterar = true;
 
-        txtNome.setText(c.getNome());
-        txtEndereco.setText(c.getEndereco());
+            txtNome.setText(c.getNome());
+            txtEndereco.setText(c.getEndereco());
 
-        if (c instanceof PessoaFisica) {
-            
-            rdBtnCpf.setSelected(true);
-            rdBtnCnpj.setEnabled(false);
-            txtCNH.setText(c.getCNHouCNHResp());
-            txtCpfCnpj.setText(c.getCPFouCNPJ());
-            txtDataDesc.setText(f.format(((PessoaFisica) c).getDtNascimento()));
-            
-        } else if (c instanceof PessoaJuridica) {
-            
-            rdBtnCnpj.setSelected(true);
-            rdBtnCpf.setEnabled(false);
-            txtCNH.setText(c.getCNHouCNHResp());
-            txtCpfCnpj.setText(c.getCPFouCNPJ());
-            txtDataDesc.setText(Float.toString(((PessoaJuridica) c).getDescontoLocacao()));
+            if (c instanceof PessoaFisica) {
 
+                rdBtnCpf.setSelected(true);
+                rdBtnCnpj.setEnabled(false);
+                txtCNH.setText(c.getCNHouCNHResp());
+                txtCpfCnpj.setText(c.getCPFouCNPJ());
+                txtDataDesc.setText(f.format(((PessoaFisica) c).getDtNascimento()));
+
+            } else if (c instanceof PessoaJuridica) {
+
+                rdBtnCnpj.setSelected(true);
+                rdBtnCpf.setEnabled(false);
+
+                lblCpfCnpj.setText("CNPJ:");
+                lblDataDesc.setText("Desconto(%):");
+
+                MaskFormatter maskCPFCNPJ = new MaskFormatter("##.###.###/####-##");
+                MaskFormatter maskDataDesc = new MaskFormatter("##");
+
+                DefaultFormatterFactory dffCPFCNPJ = new DefaultFormatterFactory(maskCPFCNPJ);
+                DefaultFormatterFactory dffDataDesc = new DefaultFormatterFactory(maskDataDesc);
+
+                txtCpfCnpj.setFormatterFactory(dffCPFCNPJ);
+                txtDataDesc.setFormatterFactory(dffDataDesc);
+
+                txtCNH.setText(c.getCNHouCNHResp());
+                txtCpfCnpj.setText(c.getCPFouCNPJ());
+                txtDataDesc.setText(Float.toString(((PessoaJuridica) c).getDescontoLocacao()));
+
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Não foi possível alterar o cliente. \n\n" + ex.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
         }
-
-        this.setVisible(true);
-        return this.clienteTemp;
+            this.setVisible(true);
+            return this.clienteTemp;
     }
 
     /**
@@ -260,7 +279,7 @@ public class TelaCadastroClientes extends javax.swing.JDialog {
                     cliente = new PessoaJuridica();
                 }
                 ((PessoaJuridica) cliente).setCnpj(txtCpfCnpj.getText());
-                ((PessoaJuridica) cliente).setCnhResponsavel(txtCpfCnpj.getText());
+                ((PessoaJuridica) cliente).setCnhResponsavel(txtCNH.getText());
                 ((PessoaJuridica) cliente).setDescontoLocacao(Float.parseFloat(txtDataDesc.getText()));
 
             }

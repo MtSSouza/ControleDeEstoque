@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -42,6 +44,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        btnGroupBuscarCliente = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -59,6 +62,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnExcluirCliente = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblClientes = new javax.swing.JTable();
+        btnLimparBuscarCliente = new javax.swing.JButton();
+        btnBuscarCliente = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtBuscarCPFCNPJ = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btnSairArquivo = new javax.swing.JMenuItem();
@@ -234,6 +241,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tblClientes);
 
+        btnLimparBuscarCliente.setText("Limpar");
+        btnLimparBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparBuscarClienteActionPerformed(evt);
+            }
+        });
+
+        btnBuscarCliente.setText("Buscar");
+        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarClienteActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Buscar por CPF ou CNPJ");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -248,13 +271,27 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGap(26, 26, 26))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtBuscarCPFCNPJ)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBuscarCliente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLimparBuscarCliente)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscarCliente)
+                    .addComponent(btnLimparBuscarCliente)
+                    .addComponent(jLabel2)
+                    .addComponent(txtBuscarCPFCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -442,8 +479,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
             if (ClienteDados.lstClientes.size() > 0) {
 
-                String nome = tblClientes.getValueAt(tblClientes.getSelectedRow(), 0).toString();
-                Cliente c = ClienteDados.obterClientePorNome(nome, ClienteDados.lstClientes);
+                String CPFCNPJ = tblClientes.getValueAt(tblClientes.getSelectedRow(), 2).toString();
+                Cliente c = ClienteDados.obterClientePorCPFouCNPJ(CPFCNPJ, ClienteDados.lstClientes);
                 if (c != null) {
 
                     if (JOptionPane.showConfirmDialog(this,
@@ -466,6 +503,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnExcluirClienteActionPerformed
+
+    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
+        // TODO add your handling code here:
+        if (!txtBuscarCPFCNPJ.getText().equals("")) {
+            Cliente c = ClienteDados.obterClientePorCPFouCNPJ(txtBuscarCPFCNPJ.getText().trim(), ClienteDados.lstClientes);
+            buscaTabelaClientes(c);
+        } else {
+            atualizaTabelaClientes(ClienteDados.lstClientes);
+        }
+    }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
+    private void btnLimparBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparBuscarClienteActionPerformed
+        // TODO add your handling code here:
+        atualizaTabelaClientes(ClienteDados.lstClientes);
+    }//GEN-LAST:event_btnLimparBuscarClienteActionPerformed
 
     private void atualizaTabelaCarros(List<Carro> tabelaCarros) {
         try {
@@ -559,6 +611,47 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }
 
+    private void buscaTabelaClientes(Cliente clientes) {
+        try {
+            if (!ClienteDados.lstClientes.isEmpty()) {
+                if (clientes != null) {
+                    DefaultTableModel modelo = (DefaultTableModel) tblClientes.getModel();
+                    modelo.getDataVector().removeAllElements();
+                    Vector v = new Vector();
+                    v.add(clientes.getNome());
+                    v.add(clientes.getEndereco());
+                    v.add(clientes.getCPFouCNPJ());
+                    v.add(clientes.getCNHouCNHResp());
+
+                    if (clientes instanceof PessoaFisica) {
+                        v.add(((PessoaFisica) clientes).getDtNascimento());
+                        v.add(null);
+                    } else if (clientes instanceof PessoaJuridica) {
+                        v.add(null);
+                        v.add(((PessoaJuridica) clientes).getDescontoLocacao());
+                    }
+
+                    modelo.addRow(v);
+
+                    tblCarros.repaint();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Nenhum cliente foi encontrado!",
+                            "Atenção",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Não há cliente na lista!",
+                        "Atenção",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Não foi possível buscar o cliente.\n\n" + ex.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -598,13 +691,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnAlterarCarro1;
     private javax.swing.JButton btnAlterarCliente;
     private javax.swing.JButton btnBuscarCarro;
+    private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnExcluirCarro2;
     private javax.swing.JButton btnExcluirCliente;
+    private javax.swing.ButtonGroup btnGroupBuscarCliente;
     private javax.swing.JButton btnLimparBuscarCarro;
+    private javax.swing.JButton btnLimparBuscarCliente;
     private javax.swing.JButton btnNovoCarro;
     private javax.swing.JButton btnNovoCliente;
     private javax.swing.JMenuItem btnSairArquivo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -616,6 +713,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable tblCarros;
     private javax.swing.JTable tblClientes;
+    private javax.swing.JTextField txtBuscarCPFCNPJ;
     private javax.swing.JTextField txtBuscarCarro;
     // End of variables declaration//GEN-END:variables
 }
