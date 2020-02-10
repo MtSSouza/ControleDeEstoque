@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class Carro {
     
+    private boolean isLocado;
     private String placa;
     private String marca;
     private String modelo;
@@ -38,6 +39,15 @@ public class Carro {
         this.marca = marca;
     }
 
+    public boolean getIsLocado() {
+        return isLocado;
+    }
+
+    public void setIsLocado(boolean isLocado) {
+        this.isLocado = isLocado;
+    }
+
+    
     public String getModelo() {
         return modelo;
     }

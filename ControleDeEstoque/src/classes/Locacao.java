@@ -6,6 +6,7 @@
 package classes;
 
 import java.util.Date;
+import java.util.Random;
 
 /**
  *
@@ -13,7 +14,8 @@ import java.util.Date;
  */
 public class Locacao {
     
-    private long codigo;
+    private boolean isAtiva;
+    private String codigo;
     private Date dataLocacao;
     private Date dataEntrega;
     private int qtdDiasLocado;
@@ -22,16 +24,31 @@ public class Locacao {
     private Cliente cliente;
     
     public Locacao(){
-        this.valorTotalLocacao = 0.00f;
+        //this.carro = new ArrayList<>();
+        //this.cliente = new ArrayList<>();
+        Random rand = new Random();
+        Date date = new Date();
+        
+        this.codigo = Integer.toString(date.getYear()) + Integer.toString(1000 + rand.nextInt(10000));
+        this.dataLocacao = date;
     }
 
-    public long getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(long codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
+
+    public boolean getIsAtiva() {
+        return isAtiva;
+    }
+
+    public void setIsAtiva(boolean isAtiva) {
+        this.isAtiva = isAtiva;
+    }
+    
 
     public Date getDataLocacao() {
         return dataLocacao;
@@ -80,6 +97,5 @@ public class Locacao {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    
     
 }

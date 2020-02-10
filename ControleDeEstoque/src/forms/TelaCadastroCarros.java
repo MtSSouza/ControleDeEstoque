@@ -184,6 +184,7 @@ public class TelaCadastroCarros extends javax.swing.JDialog {
                 carro = new Carro();
             }
 
+            carro.setIsLocado(false); 
             carro.setPlaca(txtPlacaDoCarro.getText());
             carro.setMarca(txtMarcaDoCarro.getText());
             carro.setModelo(txtModeloDoCarro.getText());
@@ -195,7 +196,7 @@ public class TelaCadastroCarros extends javax.swing.JDialog {
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                    "Não foi possível gravar pessoa. \n\n" + ex.getMessage(),
+                    "Não foi possível gravar carro. \n\n" + ex.getMessage(),
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
         }
