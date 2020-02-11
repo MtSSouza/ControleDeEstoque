@@ -639,19 +639,31 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     Locacao l = LocacaoDados.obterLocacaoPorCodigo(codigoLocacao, LocacaoDados.lstLocacao);
                     if (l != null) {
                         if (l.getIsAtiva() == true) {
+                            Date data = new Date();
+                            l.setDataEntrega(data);
+                            l.valorLocacao();
+                            if (l.getCliente() instanceof PessoaJuridica) {
+                                l.setValorTotalLocacao(l.getValorTotalLocacao() - (l.getValorTotalLocacao() * ((PessoaJuridica) l.getCliente()).getDesconto()));
+                            }
                             if (JOptionPane.showConfirmDialog(this,
-                                    "Deseja devolver " + l.getCodigo() + "?",
+                                    "Data da locação: " + l.getDataLocacao() + "\n"
+                                    + "Data entrega: " + l.getDataEntrega() + "\n"
+                                    + "Quantidade de dias locado: " + l.qtdDiasLocado() + "\n"
+                                    + "Valor total da locação(R$): " + l.getValorTotalLocacao() + "\n\n"
+                                    + "De acordo com as informações?",
                                     "Locações",
                                     JOptionPane.YES_NO_OPTION,
                                     JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                                Date data = new Date();
-                                l.setDataEntrega(data);
-                                calculoReceita();
                                 l.getCarro().setIsLocado(false);
+                                l.setIsAtiva(false);
+                                calculoReceita();
                                 this.atualizaTabelaLocacao(LocacaoDados.lstLocacao);
+                            } else {
+                                l.setDataEntrega(null);
+                                l.setValorTotalLocacao(0);
                             }
                         } else {
-                            JOptionPane.showMessageDialog(this, "Esse veículo ja foi devolvido", "Atenção", JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(this, "Essa veículo ja foi devolvido", "Atenção", JOptionPane.WARNING_MESSAGE);
                         }
                     }
                 } else {
@@ -672,17 +684,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDevolverLocacaoActionPerformed
 
-    private void calculoReceita(){
-        
+    private void calculoReceita() {
+
         float receita = 0;
-        
-        for(Locacao locacao : LocacaoDados.lstLocacao){
-            receita += locacao.valorLocacao();
+
+        for (Locacao locacao : LocacaoDados.lstLocacao) {
+            receita += locacao.getValorTotalLocacao();
         }
-        
+
         lblReceita.setText(Float.toString(receita));
     }
-    
+
     private void atualizaTabelaLocacao(List<Locacao> tabelaLocacao) {
 
         try {
@@ -695,7 +707,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 v.add(locacao.getDataLocacao());
                 v.add(locacao.getDataEntrega());
                 v.add(locacao.qtdDiasLocado());
-                v.add(locacao.valorLocacao());
+                v.add(locacao.getValorTotalLocacao());
                 v.add(locacao.getCarro().getPlaca());
                 v.add(locacao.getCarro().getMarca());
                 v.add(locacao.getCarro().getModelo());

@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class Locacao {
 
     private boolean isAtiva;
+    private boolean isFinalzada;
     private String codigo;
     private Date dataLocacao;
     private Date dataEntrega;
@@ -99,6 +100,14 @@ public class Locacao {
         this.cliente = cliente;
     }
 
+    public boolean getIsFinalzada() {
+        return isFinalzada;
+    }
+
+    public void setIsFinalzada(boolean isFinalzada) {
+        this.isFinalzada = isFinalzada;
+    }
+
     public long qtdDiasLocado() {
         try {
             SimpleDateFormat f = new SimpleDateFormat("dd/mm/yyyy");
@@ -117,8 +126,8 @@ public class Locacao {
         }
     }
     
-    public float valorLocacao(){
-        return carro.getValorDiariaLocacao() * this.qtdDiasLocado();
+    public void valorLocacao(){
+        this.valorTotalLocacao = carro.getValorDiariaLocacao() * this.qtdDiasLocado();
     }
 
 }
