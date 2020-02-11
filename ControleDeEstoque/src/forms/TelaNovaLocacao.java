@@ -10,6 +10,7 @@ import classes.Cliente;
 import classes.Locacao;
 import dados.CarroDados;
 import dados.ClienteDados;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
 /**
@@ -55,6 +56,8 @@ public class TelaNovaLocacao extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         cmbEscolherCarro = new javax.swing.JComboBox<>();
         btnGravarLocacao = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtDataLocacao = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -69,13 +72,21 @@ public class TelaNovaLocacao extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setText("Data Locação:");
+
+        try {
+            txtDataLocacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -87,13 +98,21 @@ public class TelaNovaLocacao extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(btnGravarLocacao))
-                            .addComponent(cmbEscolherCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cmbEscolherCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDataLocacao)))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtDataLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(cmbEscolherCarro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -101,7 +120,7 @@ public class TelaNovaLocacao extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbEscolherCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
                 .addComponent(btnGravarLocacao)
                 .addContainerGap())
         );
@@ -114,6 +133,7 @@ public class TelaNovaLocacao extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             Locacao locacao = new Locacao();
+            SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
 
             Carro carro = CarroDados.lstCarros.get(cmbEscolherCarro.getSelectedIndex());
 
@@ -122,10 +142,11 @@ public class TelaNovaLocacao extends javax.swing.JDialog {
                 locacao.setCarro(carro);
                 locacao.setCliente(ClienteDados.lstClientes.get(cmbEscolherCliente.getSelectedIndex()));
                 locacao.setIsAtiva(true);
+                locacao.setDataLocacao(f.parse(txtDataLocacao.getText()));
                 this.locacaoTemp = locacao;
                 this.setVisible(false);
                 carro.setIsLocado(true);
-                
+
             } else {
                 JOptionPane.showMessageDialog(this, "O veículo atualmente encontra-se indisponível para locação", "Atenção", JOptionPane.WARNING_MESSAGE);
             }
@@ -187,5 +208,7 @@ public class TelaNovaLocacao extends javax.swing.JDialog {
     public static javax.swing.JComboBox<String> cmbEscolherCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JFormattedTextField txtDataLocacao;
     // End of variables declaration//GEN-END:variables
 }

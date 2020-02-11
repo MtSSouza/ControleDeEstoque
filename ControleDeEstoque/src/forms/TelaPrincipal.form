@@ -110,7 +110,7 @@
                               <Component id="btnLimparBuscarCarro" min="-2" pref="95" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace min="10" pref="602" max="32767" attributes="0"/>
                               <Component id="btnNovoCarro" min="-2" pref="67" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnAlterarCarro1" min="-2" pref="67" max="-2" attributes="0"/>
@@ -364,15 +364,19 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane4" alignment="0" pref="823" max="32767" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblReceita" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnNovaLocacao" min="-2" pref="67" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnDevolverLocacao" min="-2" pref="75" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnExcluirLocacao" min="-2" pref="67" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="jScrollPane4" pref="823" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -388,6 +392,8 @@
                           <Component id="btnNovaLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnDevolverLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnExcluirLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblReceita" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -445,6 +451,13 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirLocacaoActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel4">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Receita Total (R$):"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblReceita">
             </Component>
           </SubComponents>
         </Container>

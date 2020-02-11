@@ -5,15 +5,18 @@
  */
 package classes;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
  * @author matheus.souza
  */
 public class Locacao {
-    
+
     private boolean isAtiva;
     private String codigo;
     private Date dataLocacao;
@@ -22,15 +25,14 @@ public class Locacao {
     private float valorTotalLocacao;
     private Carro carro;
     private Cliente cliente;
-    
-    public Locacao(){
-        //this.carro = new ArrayList<>();
-        //this.cliente = new ArrayList<>();
+
+    public Locacao() {
+        
         Random rand = new Random();
         Date date = new Date();
-        
+
         this.codigo = Integer.toString(date.getYear()) + Integer.toString(1000 + rand.nextInt(10000));
-        this.dataLocacao = date;
+
     }
 
     public String getCodigo() {
@@ -48,7 +50,6 @@ public class Locacao {
     public void setIsAtiva(boolean isAtiva) {
         this.isAtiva = isAtiva;
     }
-    
 
     public Date getDataLocacao() {
         return dataLocacao;
@@ -97,5 +98,27 @@ public class Locacao {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    public long qtdDiasLocado() {
+        try {
+            SimpleDateFormat f = new SimpleDateFormat("dd/mm/yyyy");
+            Date date = new Date();
+
+            Date dtInicio = this.dataLocacao;
+            Date dtFim = this.dataEntrega;
+
+            long difMilisegundos = Math.abs(dtFim.getTime() - dtInicio.getTime());
+            long dif = TimeUnit.DAYS.convert(difMilisegundos, TimeUnit.MILLISECONDS);
+
+            return dif;
+
+        } catch (Exception e) {
+            return 0;
+        }
+    }
     
+    public float valorLocacao(){
+        return carro.getValorDiariaLocacao() * this.qtdDiasLocado();
+    }
+
 }

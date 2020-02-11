@@ -13,6 +13,7 @@ import classes.Locacao;
 import dados.CarroDados;
 import dados.ClienteDados;
 import dados.LocacaoDados;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -74,6 +75,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnNovaLocacao = new javax.swing.JButton();
         btnDevolverLocacao = new javax.swing.JButton();
         btnExcluirLocacao = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        lblReceita = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btnSairArquivo = new javax.swing.JMenuItem();
@@ -174,7 +177,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLimparBuscarCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(10, 602, Short.MAX_VALUE)
                         .addComponent(btnNovoCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAlterarCarro1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -355,6 +358,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Receita Total (R$):");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -362,14 +367,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblReceita)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnNovaLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnDevolverLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnExcluirLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnExcluirLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -381,7 +390,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovaLocacao)
                     .addComponent(btnDevolverLocacao)
-                    .addComponent(btnExcluirLocacao))
+                    .addComponent(btnExcluirLocacao)
+                    .addComponent(jLabel4)
+                    .addComponent(lblReceita))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -612,6 +623,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         LocacaoDados.lstLocacao.add(l);
         this.atualizaTabelaLocacao(LocacaoDados.lstLocacao);
+
     }//GEN-LAST:event_btnNovaLocacaoActionPerformed
 
     private void btnExcluirLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirLocacaoActionPerformed
@@ -622,7 +634,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             if (LocacaoDados.lstLocacao.size() > 0) {
-                if (tblClientes.getSelectedRow() != -1) {
+                if (tblLocacao.getSelectedRow() != -1) {
                     String codigoLocacao = tblLocacao.getValueAt(tblLocacao.getSelectedRow(), 0).toString();
                     Locacao l = LocacaoDados.obterLocacaoPorCodigo(codigoLocacao, LocacaoDados.lstLocacao);
                     if (l != null) {
@@ -632,9 +644,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                                     "Locações",
                                     JOptionPane.YES_NO_OPTION,
                                     JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                                
+                                Date data = new Date();
+                                l.setDataEntrega(data);
+                                calculoReceita();
                                 l.getCarro().setIsLocado(false);
-                                this.atualizaTabelaClientes(ClienteDados.lstClientes);
+                                this.atualizaTabelaLocacao(LocacaoDados.lstLocacao);
                             }
                         } else {
                             JOptionPane.showMessageDialog(this, "Esse veículo ja foi devolvido", "Atenção", JOptionPane.WARNING_MESSAGE);
@@ -658,6 +672,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDevolverLocacaoActionPerformed
 
+    private void calculoReceita(){
+        
+        float receita = 0;
+        
+        for(Locacao locacao : LocacaoDados.lstLocacao){
+            receita += locacao.valorLocacao();
+        }
+        
+        lblReceita.setText(Float.toString(receita));
+    }
+    
     private void atualizaTabelaLocacao(List<Locacao> tabelaLocacao) {
 
         try {
@@ -668,9 +693,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 Vector v = new Vector();
                 v.add(locacao.getCodigo());
                 v.add(locacao.getDataLocacao());
-                v.add(null);
-                v.add(null);
-                v.add(null);
+                v.add(locacao.getDataEntrega());
+                v.add(locacao.qtdDiasLocado());
+                v.add(locacao.valorLocacao());
                 v.add(locacao.getCarro().getPlaca());
                 v.add(locacao.getCarro().getMarca());
                 v.add(locacao.getCarro().getModelo());
@@ -878,6 +903,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnSairArquivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -889,6 +915,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblReceita;
     private javax.swing.JTable tblCarros;
     private javax.swing.JTable tblClientes;
     private javax.swing.JTable tblLocacao;
