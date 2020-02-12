@@ -13,6 +13,7 @@ import classes.Locacao;
 import dados.CarroDados;
 import dados.ClienteDados;
 import dados.LocacaoDados;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -77,6 +78,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnExcluirLocacao = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         lblReceita = new javax.swing.JLabel();
+        cmbTipoBusca = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        lblBuscaPrimaria = new javax.swing.JLabel();
+        btnBuscarLocacao = new javax.swing.JButton();
+        lblBuscaSecundaria = new javax.swing.JLabel();
+        txtBuscaPrimaria = new javax.swing.JTextField();
+        txtBuscaSecundaria = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        cmbFiltro = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btnSairArquivo = new javax.swing.JMenuItem();
@@ -153,7 +163,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnLimparBuscarCarro.setText("Limpar busca");
+        btnLimparBuscarCarro.setText("Limpar ");
         btnLimparBuscarCarro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimparBuscarCarroActionPerformed(evt);
@@ -167,7 +177,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 613, Short.MAX_VALUE)
+                        .addComponent(btnNovoCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAlterarCarro1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnExcluirCarro2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -175,14 +192,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscarCarro)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnLimparBuscarCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 602, Short.MAX_VALUE)
-                        .addComponent(btnNovoCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnAlterarCarro1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnExcluirCarro2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnLimparBuscarCarro)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -194,7 +204,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(btnLimparBuscarCarro))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovoCarro)
@@ -279,8 +289,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtBuscarCPFCNPJ, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscarCliente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLimparBuscarCliente))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -360,6 +370,30 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jLabel4.setText("Receita Total (R$):");
 
+        cmbTipoBusca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CPF OU CNPJ", "PLACA DO CARRO", "DATA", " " }));
+        cmbTipoBusca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTipoBuscaActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Tipo de busca:");
+
+        lblBuscaPrimaria.setText("CPF ou CNPJ:");
+
+        btnBuscarLocacao.setText("Buscar");
+        btnBuscarLocacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarLocacaoActionPerformed(evt);
+            }
+        });
+
+        lblBuscaSecundaria.setText("Data Final:");
+
+        jLabel5.setText("Filtro:");
+
+        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODAS", "DEVOLVIDAS", "NÃO DEVOLVIDAS" }));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -378,13 +412,42 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(btnDevolverLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnExcluirLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbTipoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblBuscaPrimaria)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtBuscaPrimaria, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblBuscaSecundaria)
+                        .addGap(6, 6, 6)
+                        .addComponent(txtBuscaSecundaria, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscarLocacao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addGap(3, 3, 3)
+                        .addComponent(cmbFiltro, 0, 125, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(3, 3, 3)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbTipoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblBuscaPrimaria)
+                    .addComponent(btnBuscarLocacao)
+                    .addComponent(lblBuscaSecundaria)
+                    .addComponent(txtBuscaPrimaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscaSecundaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -615,19 +678,110 @@ public class TelaPrincipal extends javax.swing.JFrame {
         atualizaTabelaClientes(ClienteDados.lstClientes);
     }//GEN-LAST:event_btnLimparBuscarClienteActionPerformed
 
-    private void btnNovaLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaLocacaoActionPerformed
+    private void btnBuscarLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarLocacaoActionPerformed
         // TODO add your handling code here:
-        TelaNovaLocacao telaNovaLocacao = new TelaNovaLocacao(this, true);
+        try {
+            SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
 
-        Locacao l = telaNovaLocacao.execute();
+            if (cmbTipoBusca.getSelectedIndex() == 0) {
+                if (!txtBuscaPrimaria.getText().equals("")) {
+                    LocacaoDados.lstBuscaLocacao.clear();
+                    LocacaoDados.obterLocacaoPorCPFouCNPJ(txtBuscaPrimaria.getText().trim(), LocacaoDados.lstLocacao);
+                    buscaTabelaLocacao(LocacaoDados.lstBuscaLocacao);
+                } else {
+                    atualizaTabelaLocacao(LocacaoDados.lstLocacao);
+                }
+            } else if (cmbTipoBusca.getSelectedIndex() == 1) {
+                if (!txtBuscaPrimaria.getText().equals("")) {
+                    LocacaoDados.lstBuscaLocacao.clear();
+                    LocacaoDados.obterLocacaoPorPlacaDoCarro(txtBuscaPrimaria.getText().trim(), LocacaoDados.lstLocacao);
+                    buscaTabelaLocacao(LocacaoDados.lstBuscaLocacao);
+                } else {
+                    atualizaTabelaLocacao(LocacaoDados.lstLocacao);
+                }
+            } else if (cmbTipoBusca.getSelectedIndex() == 2) {
+                if (!txtBuscaPrimaria.getText().equals("")) {
+                    LocacaoDados.lstBuscaLocacao.clear();
+                    LocacaoDados.obterLocacaoPorData(f.parse(txtBuscaPrimaria.getText().trim()), f.parse(txtBuscaSecundaria.getText().trim()), LocacaoDados.lstLocacao);
+                    buscaTabelaLocacao(LocacaoDados.lstBuscaLocacao);
+                } else {
+                    atualizaTabelaLocacao(LocacaoDados.lstLocacao);
+                }
+            }
+        } catch (Exception ex) {
 
-        LocacaoDados.lstLocacao.add(l);
-        this.atualizaTabelaLocacao(LocacaoDados.lstLocacao);
+        }
+    }//GEN-LAST:event_btnBuscarLocacaoActionPerformed
 
-    }//GEN-LAST:event_btnNovaLocacaoActionPerformed
+    private void cmbTipoBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoBuscaActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (cmbTipoBusca.getSelectedIndex() == 0) {
+
+                txtBuscaPrimaria.setText("");
+                lblBuscaPrimaria.setText("CPF ou CNPJ:");
+                lblBuscaSecundaria.setVisible(false);
+                txtBuscaSecundaria.setVisible(false);
+            } else if (cmbTipoBusca.getSelectedIndex() == 1) {
+
+                txtBuscaPrimaria.setText("");
+                lblBuscaPrimaria.setText("Placa do carro:");
+                lblBuscaSecundaria.setVisible(false);
+                txtBuscaSecundaria.setVisible(false);
+            } else if (cmbTipoBusca.getSelectedIndex() == 2) {
+
+                txtBuscaPrimaria.setText("");
+                txtBuscaSecundaria.setText("");
+                lblBuscaPrimaria.setText("Data Inicial:");
+                lblBuscaSecundaria.setVisible(true);
+                txtBuscaSecundaria.setVisible(true);
+            }
+        } catch (Exception ex) {
+
+        }
+    }//GEN-LAST:event_cmbTipoBuscaActionPerformed
 
     private void btnExcluirLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirLocacaoActionPerformed
         // TODO add your handling code here:
+        try {
+            if (LocacaoDados.lstLocacao.size() > 0) {
+                if (tblLocacao.getSelectedRow() != -1) {
+                    String codigoLocacao = tblLocacao.getValueAt(tblLocacao.getSelectedRow(), 0).toString();
+                    Locacao l = LocacaoDados.obterLocacaoPorCodigo(codigoLocacao, LocacaoDados.lstLocacao);
+                    if (l != null) {
+                        if (l.getIsAtiva() == true) {
+                            if (JOptionPane.showConfirmDialog(this,
+                                    "Deseja Excluir " + l.getCodigo() + "?",
+                                    "Clietes",
+                                    JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+
+                                l.getCarro().setIsLocado(false);
+                                l.setIsAtiva(false);
+                                LocacaoDados.lstLocacao.remove(l);
+                                this.atualizaTabelaLocacao(LocacaoDados.lstLocacao);
+
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Não é possível excluir essa locação", "Atenção", JOptionPane.WARNING_MESSAGE);
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Não há itens selecionados",
+                            "Atenção",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Não há clientes na lista!",
+                        "Atenção",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Não foi possível alterar o cliente.\n\n" + ex.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnExcluirLocacaoActionPerformed
 
     private void btnDevolverLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverLocacaoActionPerformed
@@ -672,17 +826,27 @@ public class TelaPrincipal extends javax.swing.JFrame {
                             JOptionPane.WARNING_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Não há clientes na lista!",
+                JOptionPane.showMessageDialog(this, "Não há locações na lista!",
                         "Atenção",
                         JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                    "Não foi possível alterar o cliente.\n\n" + ex.getMessage(),
+                    "Não foi possível alterar a locação.\n\n" + ex.getMessage(),
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnDevolverLocacaoActionPerformed
+
+    private void btnNovaLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaLocacaoActionPerformed
+        // TODO add your handling code here:
+        TelaNovaLocacao telaNovaLocacao = new TelaNovaLocacao(this, true);
+
+        Locacao l = telaNovaLocacao.execute();
+
+        LocacaoDados.lstLocacao.add(l);
+        this.atualizaTabelaLocacao(LocacaoDados.lstLocacao);
+    }//GEN-LAST:event_btnNovaLocacaoActionPerformed
 
     private void calculoReceita() {
 
@@ -718,10 +882,87 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
             }
 
-            tblCarros.repaint();
+            tblLocacao.repaint();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
                     "Não foi possível carregar a nova locacao.\n\n" + ex.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void buscaTabelaLocacao(List<Locacao> tabelaLocacao) {
+        try {
+            if (!ClienteDados.lstClientes.isEmpty()) {
+                if (!tabelaLocacao.isEmpty()) {
+
+                    DefaultTableModel modelo = (DefaultTableModel) tblLocacao.getModel();
+                    modelo.getDataVector().removeAllElements();
+
+                    for (Locacao locacao : tabelaLocacao) {
+                        if (cmbFiltro.getSelectedIndex() == 0) {
+                            Vector v = new Vector();
+                            v.add(locacao.getCodigo());
+                            v.add(locacao.getDataLocacao());
+                            v.add(locacao.getDataEntrega());
+                            v.add(locacao.qtdDiasLocado());
+                            v.add(locacao.getValorTotalLocacao());
+                            v.add(locacao.getCarro().getPlaca());
+                            v.add(locacao.getCarro().getMarca());
+                            v.add(locacao.getCarro().getModelo());
+                            v.add(locacao.getCliente().getNome());
+                            v.add(locacao.getCliente().getCPFouCNPJ());
+
+                            modelo.addRow(v);
+                        } else if (cmbFiltro.getSelectedIndex() == 1) {
+                            if (locacao.getIsAtiva() == false) {
+                                Vector v = new Vector();
+                                v.add(locacao.getCodigo());
+                                v.add(locacao.getDataLocacao());
+                                v.add(locacao.getDataEntrega());
+                                v.add(locacao.qtdDiasLocado());
+                                v.add(locacao.getValorTotalLocacao());
+                                v.add(locacao.getCarro().getPlaca());
+                                v.add(locacao.getCarro().getMarca());
+                                v.add(locacao.getCarro().getModelo());
+                                v.add(locacao.getCliente().getNome());
+                                v.add(locacao.getCliente().getCPFouCNPJ());
+                                
+                                modelo.addRow(v);
+                            }
+                        } else if (cmbFiltro.getSelectedIndex() == 2) {
+                            if (locacao.getIsAtiva() == true) {
+                                Vector v = new Vector();
+                                v.add(locacao.getCodigo());
+                                v.add(locacao.getDataLocacao());
+                                v.add(locacao.getDataEntrega());
+                                v.add(locacao.qtdDiasLocado());
+                                v.add(locacao.getValorTotalLocacao());
+                                v.add(locacao.getCarro().getPlaca());
+                                v.add(locacao.getCarro().getMarca());
+                                v.add(locacao.getCarro().getModelo());
+                                v.add(locacao.getCliente().getNome());
+                                v.add(locacao.getCliente().getCPFouCNPJ());
+                                
+                                modelo.addRow(v);
+                            }
+                        }
+                    }
+
+                    tblLocacao.repaint();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Nenhuma locação foi encontrado!",
+                            "Atenção",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Não há locações na lista!",
+                        "Atenção",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Não foi possível buscar a locação.\n\n" + ex.getMessage(),
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -893,6 +1134,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TelaPrincipal().setVisible(true);
+                lblBuscaSecundaria.setVisible(false);
+                txtBuscaSecundaria.setVisible(false);
             }
         });
     }
@@ -902,6 +1145,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnAlterarCliente;
     private javax.swing.JButton btnBuscarCarro;
     private javax.swing.JButton btnBuscarCliente;
+    private javax.swing.JButton btnBuscarLocacao;
     private javax.swing.JButton btnDevolverLocacao;
     private javax.swing.JButton btnExcluirCarro2;
     private javax.swing.JButton btnExcluirCliente;
@@ -913,9 +1157,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnNovoCarro;
     private javax.swing.JButton btnNovoCliente;
     private javax.swing.JMenuItem btnSairArquivo;
+    private javax.swing.JComboBox<String> cmbFiltro;
+    private javax.swing.JComboBox<String> cmbTipoBusca;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -927,10 +1175,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblBuscaPrimaria;
+    private static javax.swing.JLabel lblBuscaSecundaria;
     private javax.swing.JLabel lblReceita;
     private javax.swing.JTable tblCarros;
     private javax.swing.JTable tblClientes;
     private javax.swing.JTable tblLocacao;
+    private javax.swing.JTextField txtBuscaPrimaria;
+    private static javax.swing.JTextField txtBuscaSecundaria;
     private javax.swing.JTextField txtBuscarCPFCNPJ;
     private javax.swing.JTextField txtBuscarCarro;
     // End of variables declaration//GEN-END:variables

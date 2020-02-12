@@ -58,6 +58,7 @@ public class TelaNovaLocacao extends javax.swing.JDialog {
         btnGravarLocacao = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtDataLocacao = new javax.swing.JFormattedTextField();
+        btnCancelarLocacao = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -80,6 +81,13 @@ public class TelaNovaLocacao extends javax.swing.JDialog {
             ex.printStackTrace();
         }
 
+        btnCancelarLocacao.setText("Cancelar");
+        btnCancelarLocacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarLocacaoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,20 +98,21 @@ public class TelaNovaLocacao extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbEscolherCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbEscolherCarro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(btnGravarLocacao))
-                            .addComponent(cmbEscolherCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnGravarLocacao)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCancelarLocacao))
+                            .addComponent(cmbEscolherCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
                         .addComponent(txtDataLocacao)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,7 +130,9 @@ public class TelaNovaLocacao extends javax.swing.JDialog {
                     .addComponent(cmbEscolherCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(27, 27, 27)
-                .addComponent(btnGravarLocacao)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGravarLocacao)
+                    .addComponent(btnCancelarLocacao))
                 .addContainerGap())
         );
 
@@ -159,6 +170,12 @@ public class TelaNovaLocacao extends javax.swing.JDialog {
                     JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGravarLocacaoActionPerformed
+
+    private void btnCancelarLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarLocacaoActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        this.locacaoTemp = null;
+    }//GEN-LAST:event_btnCancelarLocacaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,6 +220,7 @@ public class TelaNovaLocacao extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelarLocacao;
     private javax.swing.JButton btnGravarLocacao;
     public static javax.swing.JComboBox<String> cmbEscolherCarro;
     public static javax.swing.JComboBox<String> cmbEscolherCliente;
