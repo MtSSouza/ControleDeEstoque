@@ -499,8 +499,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         Carro c = telaCadastroCarros.execute();
 
-        CarroDados.lstCarros.add(c);
-        this.atualizaTabelaCarros(CarroDados.lstCarros);
+        if (c != null) {
+            CarroDados.lstCarros.add(c);
+            this.atualizaTabelaCarros(CarroDados.lstCarros);
+        }
     }//GEN-LAST:event_btnNovoCarroActionPerformed
 
     private void btnAlterarCarro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarCarro1ActionPerformed
@@ -590,8 +592,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         Cliente c = telaCadastroClientes.execute();
 
-        ClienteDados.lstClientes.add(c);
-        this.atualizaTabelaClientes(ClienteDados.lstClientes);
+        if (c != null) {
+            ClienteDados.lstClientes.add(c);
+            this.atualizaTabelaClientes(ClienteDados.lstClientes);
+        }
     }//GEN-LAST:event_btnNovoClienteActionPerformed
 
     private void btnAlterarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarClienteActionPerformed
@@ -690,6 +694,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     buscaTabelaLocacao(LocacaoDados.lstBuscaLocacao);
                 } else {
                     atualizaTabelaLocacao(LocacaoDados.lstLocacao);
+                    calculoReceita();
                 }
             } else if (cmbTipoBusca.getSelectedIndex() == 1) {
                 if (!txtBuscaPrimaria.getText().equals("")) {
@@ -698,6 +703,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     buscaTabelaLocacao(LocacaoDados.lstBuscaLocacao);
                 } else {
                     atualizaTabelaLocacao(LocacaoDados.lstLocacao);
+                    calculoReceita();
                 }
             } else if (cmbTipoBusca.getSelectedIndex() == 2) {
                 if (!txtBuscaPrimaria.getText().equals("")) {
@@ -706,6 +712,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     buscaTabelaLocacao(LocacaoDados.lstBuscaLocacao);
                 } else {
                     atualizaTabelaLocacao(LocacaoDados.lstLocacao);
+                    calculoReceita();
                 }
             }
         } catch (Exception ex) {
@@ -843,9 +850,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaNovaLocacao telaNovaLocacao = new TelaNovaLocacao(this, true);
 
         Locacao l = telaNovaLocacao.execute();
-
-        LocacaoDados.lstLocacao.add(l);
-        this.atualizaTabelaLocacao(LocacaoDados.lstLocacao);
+        if (l != null) {
+            LocacaoDados.lstLocacao.add(l);
+            this.atualizaTabelaLocacao(LocacaoDados.lstLocacao);
+        }
     }//GEN-LAST:event_btnNovaLocacaoActionPerformed
 
     private void calculoReceita() {
@@ -893,6 +901,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void buscaTabelaLocacao(List<Locacao> tabelaLocacao) {
         try {
+            float receita = 0;
             if (!ClienteDados.lstClientes.isEmpty()) {
                 if (!tabelaLocacao.isEmpty()) {
 
@@ -912,7 +921,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                             v.add(locacao.getCarro().getModelo());
                             v.add(locacao.getCliente().getNome());
                             v.add(locacao.getCliente().getCPFouCNPJ());
-
+                            receita += locacao.getValorTotalLocacao();
                             modelo.addRow(v);
                         } else if (cmbFiltro.getSelectedIndex() == 1) {
                             if (locacao.getIsAtiva() == false) {
@@ -927,7 +936,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                                 v.add(locacao.getCarro().getModelo());
                                 v.add(locacao.getCliente().getNome());
                                 v.add(locacao.getCliente().getCPFouCNPJ());
-                                
+                                receita += locacao.getValorTotalLocacao();
                                 modelo.addRow(v);
                             }
                         } else if (cmbFiltro.getSelectedIndex() == 2) {
@@ -943,12 +952,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
                                 v.add(locacao.getCarro().getModelo());
                                 v.add(locacao.getCliente().getNome());
                                 v.add(locacao.getCliente().getCPFouCNPJ());
-                                
+                                receita += locacao.getValorTotalLocacao();
                                 modelo.addRow(v);
                             }
                         }
+                        
                     }
-
+                    lblReceita.setText(Float.toString(receita));
                     tblLocacao.repaint();
                 } else {
                     JOptionPane.showMessageDialog(this, "Nenhuma locação foi encontrado!",
